@@ -1,0 +1,191 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ moviedetail.title }} - Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Asimovian&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: Radial-gradient(rgba(0, 0, 0, 0.747), rgba(0, 0, 0, 0.782)),
+            url("{% static 'streamxback.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            font-family: "Chirp", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: white;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0);
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            padding: 15px 20px;
+        }
+
+        .navbar-brand {
+            font-family: "Asimovian", sans-serif;
+            font-weight: bolder;
+            font-size: 30px;
+        }
+
+        .nav-link {
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .nav-link:focus,
+        .nav-link:active,
+        .dropdown-item:focus,
+        .dropdown-item:active {
+            color: red !important;
+            background-color: transparent !important;
+            outline: none !important;
+        }
+
+        .nav-link:hover {
+            color: red;
+            transition: 0.3s;
+        }
+
+        .watchnowbtn {
+            text-decoration: none;
+            border: 1px solid red;
+            padding: 10px 10px;
+            border-radius: 10px;
+            background-color: red;
+            color: white;
+            font-weight: bolder;
+            transition: 0.3s;
+        }
+
+        .watchnowbtn:hover {
+            background-color: rgb(167, 6, 6);
+        }
+
+        .button {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .container {
+            padding-top: 100px;
+        }
+
+        .movie-section {
+            padding: 60px 0;
+        }
+
+        .movie-video video {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .movie-details {
+            background-color: rgb(27, 27, 27);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.16);
+            padding: 20px;
+        }
+
+        .movie-details h3 {
+            color: #e10202;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-family: "Oxanium", sans-serif;
+            font-size: 40px;
+        }
+
+        .movie-details p {
+            margin-bottom: 10px;
+            font-size: 17px;
+        }
+
+        .movie-details strong {
+            color: #3a89cd;
+            font-size: 19px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" style="color: red; padding: 25px 20px;">STREAM-X</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">TV</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'movieslist' %}">Movies</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'favouritelist' %}"><i class="bi bi-star-fill">&nbsp;Favourites</i></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container-fluid movie-section px-5">
+        <div class="row align-items-center">
+
+            <div class="col-md-7 movie-video">
+                {% if moviedetail.trailer %}
+                <video controls poster="{{ moviedetail.image.url }}">
+                    <source src="{{ moviedetail.trailer.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                {% else %}
+                <p class="text-center text-muted mt-3" style="color: white; font-weight: bolder;">Trailer not available.
+                </p>
+                {% endif %}
+            </div>
+
+
+            <div class="col-md-5">
+                <div class="movie-details">
+                    <h3>{{ moviedetail.title }}</h3>
+                    <p>🗣 <strong>Language:</strong> {{ moviedetail.language }}</p>
+                    <p>⭐ <strong>Rating:</strong> {{ moviedetail.rating }}</p>
+                    <p>🎭 <strong>Genre:</strong> {{ moviedetail.genre }}</p>
+                    <p>📅 <strong>Release Date:</strong> {{ moviedetail.release_date }}</p>
+                    <p>👥 <strong>Actors:</strong> {{ moviedetail.actors }}</p>
+                    <p class="mt-2">📖 <strong> Description:</strong> {{ moviedetail.description }}</p>
+                    <br>
+
+                    <div class="button">
+                        <a class="watchnowbtn" href="#">Watch Now</a>
+                        <a class="watchnowbtn" id="button" href="{% url 'addtofavourite' moviedetail.id %}">Add to
+                            Favorite</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('button').addEventListener('click', function () {
+            alert('Added Sucessfully!');
+        });
+    </script>
+
+
+</body>
+
+</html>
